@@ -1,5 +1,6 @@
 package plp.orientadaObjetos1.memoria;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import plp.expressions2.expression.Id;
@@ -30,4 +31,8 @@ public class ContextoObjeto{
 		return this.estado.get(id);
 	}
 
+	public Collection<Valor> getValoresMapeados(){
+		return estado.values();
+	}
+	
 }

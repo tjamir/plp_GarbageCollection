@@ -3,7 +3,10 @@ package plp.orientadaObjetos1.memoria;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 import plp.expressions2.expression.Id;
@@ -53,7 +56,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     private ListaValor saida;
 
     /**
-	 * A referência do objeto a ser inserido na pilha de objetos
+	 * A referï¿½ncia do objeto a ser inserido na pilha de objetos
 	 */
     private ValorRef proxRef;
 
@@ -91,7 +94,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 * Construtor.
 	 * 
 	 * @param entrada
-	 *            Entrada para o contexto de execução.
+	 *            Entrada para o contexto de execuï¿½ï¿½o.
 	 */
     public ContextoExecucaoOO1(ListaValor entrada){
         pilha = new Stack<HashMap<Id, Valor>>();
@@ -105,7 +108,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Obtém a pilha de valores associados a identificadores
+	 * Obtï¿½m a pilha de valores associados a identificadores
 	 * 
 	 * @return a pilha de valores associados a identificadores.
 	 */
@@ -122,16 +125,16 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	}    
 
     /**
-	 * Retorna a pilha com as definiçoes das classes.
+	 * Retorna a pilha com as definiï¿½oes das classes.
 	 * 
-	 * @return a pilha com as definiçoes das classes.
+	 * @return a pilha com as definiï¿½oes das classes.
 	 */
     public HashMap<Id, DefClasse> getMapDefClasse(){
        return this.mapDefClasse;
     }
 
     /**
-	 * Obtém o mapeamento com os objetos e seus valores.
+	 * Obtï¿½m o mapeamento com os objetos e seus valores.
 	 * 
 	 * @return o mapeamento com os objetos e seus valores.
 	 */
@@ -140,13 +143,13 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Lê da entrada padrão e associa o conteúdo a um determinado identificador.
+	 * Lï¿½ da entrada padrï¿½o e associa o conteï¿½do a um determinado identificador.
 	 * 
 	 * @param tipoIdLido
-	 *            Tipo do identificador ao qual será associado o valor lido.
+	 *            Tipo do identificador ao qual serï¿½ associado o valor lido.
 	 * @return o valor lido.
 	 * @throws EntradaInvalidaException
-	 *             Quando a entrada fornecida não pode ser atribuída ao tipo do
+	 *             Quando a entrada fornecida nï¿½o pode ser atribuï¿½da ao tipo do
 	 *             identificador.
 	 */
     public Valor read(Tipo tipoIdLido) throws EntradaInvalidaException {
@@ -165,20 +168,20 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
               }
             }
             catch(NumberFormatException e){
-              throw new EntradaInvalidaException("O tipo da entrada e o da variável"+
-                                                 " a ser lida são diferentes!");
+              throw new EntradaInvalidaException("O tipo da entrada e o da variï¿½vel"+
+                                                 " a ser lida sï¿½o diferentes!");
             }
         }
       }
-      throw new EntradaInvalidaException("O tipo da variável a ser lida não é um tipo Primitivo!");
+      throw new EntradaInvalidaException("O tipo da variï¿½vel a ser lida nï¿½o ï¿½ um tipo Primitivo!");
     }
 
     /**
-	 * Este método lê uma entrada que pode ser de uma tail ou do teclado
+	 * Este mï¿½todo lï¿½ uma entrada que pode ser de uma tail ou do teclado
 	 * 
-	 * @return Obtém uma entrada que pode ser de uma tail ou do teclado
-	 * @exception Lança
-	 *                uma exceção se a tail com os valores nao tiver mais
+	 * @return Obtï¿½m uma entrada que pode ser de uma tail ou do teclado
+	 * @exception Lanï¿½a
+	 *                uma exceï¿½ï¿½o se a tail com os valores nao tiver mais
 	 *                elementos.
 	 */
     private String leEntrada() throws EntradaInvalidaException{
@@ -187,15 +190,15 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
       } else {
         // Se nao tivermos mais nada na tail de valores
         if(entrada.length()==0) {
-          throw new EntradaInvalidaException("Número de argumentos menor do que o número de reads!");
+          throw new EntradaInvalidaException("Nï¿½mero de argumentos menor do que o nï¿½mero de reads!");
         }
         return leDaListaValor();
       }
     }
     /**
-	 * Este método lê da entrada padrão
+	 * Este mï¿½todo lï¿½ da entrada padrï¿½o
 	 * 
-	 * @return o que o usuário digitou na entrada padrão
+	 * @return o que o usuï¿½rio digitou na entrada padrï¿½o
 	 */
     private String leDaEntradaPadrao(){
       try {
@@ -203,15 +206,15 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         return in.readLine();
       }
       catch (IOException e){
-         System.out.println("Erro no valor lido da entrada padrão");
+         System.out.println("Erro no valor lido da entrada padrï¿½o");
       }
       return "";
     }
 
     /**
-	 * Este método lê da entrada padrão
+	 * Este mï¿½todo lï¿½ da entrada padrï¿½o
 	 * 
-	 * @return o que o usuário digitou na entrada padrão
+	 * @return o que o usuï¿½rio digitou na entrada padrï¿½o
 	 */
     private String leDaListaValor(){
       String retorno = entrada.getHead().toString();
@@ -220,16 +223,16 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Obtém a saída.
+	 * Obtï¿½m a saï¿½da.
 	 * 
-	 * @return a saída.
+	 * @return a saï¿½da.
 	 */
     public ListaValor getSaida() {
         return saida;
     }
 
     /**
-	 * Obtém a entrada.
+	 * Obtï¿½m a entrada.
 	 * 
 	 * @return a entrada.
 	 */
@@ -238,24 +241,24 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Escreve um valor 'v' na saída.
+	 * Escreve um valor 'v' na saï¿½da.
 	 * 
 	 * @param v
 	 *            O valor a ser escrito.
-	 * @return o ambiente de execução, que representa o estado atual.
+	 * @return o ambiente de execuï¿½ï¿½o, que representa o estado atual.
 	 */
     public AmbienteExecucaoOO1 write(Valor v){
         saida.write(v);
         return this;
     }
     /**
-	 * Incrementa a pilha do ambiente, passando para o próximo estado.
+	 * Incrementa a pilha do ambiente, passando para o prï¿½ximo estado.
 	 */
     public void incrementa() {
         pilha.push(new HashMap<Id, Valor>());
-        // pilhaDefClasse.push(new HashIdDefClasse()); // só incrementa no
+        // pilhaDefClasse.push(new HashIdDefClasse()); // sï¿½ incrementa no
 		// construtor
-        // pilhaObjeto.push(new HashValorObjeto()); // só incrementa no
+        // pilhaObjeto.push(new HashValorObjeto()); // sï¿½ incrementa no
 		// construtor
     }
 
@@ -264,8 +267,8 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 */
     public void restaura(){
         pilha.pop();
-        // pilhaDefClasse.pop(); // não restaura
-        // pilhaObjeto.pop(); // não restaura
+        // pilhaDefClasse.pop(); // nï¿½o restaura
+        // pilhaObjeto.pop(); // nï¿½o restaura
     }
 
     /**
@@ -276,7 +279,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 * @param valorId
 	 *            Valor que vai ser associado ao identificador.
 	 * @throws VariavelJaDeclaradaException
-	 *             Quando a variável já foi declarada.
+	 *             Quando a variï¿½vel jï¿½ foi declarada.
 	 */
     public void map(Id idArg, Valor valorId)
         throws VariavelJaDeclaradaException {
@@ -288,14 +291,14 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Mapeia um identificador a um definição de classe.
+	 * Mapeia um identificador a um definiï¿½ï¿½o de classe.
 	 * 
 	 * @param idArg
 	 *            o nome da classe
 	 * @param defClasse
-	 *            Definição da Classe.
+	 *            Definiï¿½ï¿½o da Classe.
 	 * @throws ClasseJaDeclaradaException
-	 *             quando a classe já foi declarada.
+	 *             quando a classe jï¿½ foi declarada.
 	 */
     public void mapDefClasse(Id idArg, DefClasse defClasse)
         throws ClasseJaDeclaradaException {
@@ -305,14 +308,14 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Mapeia um valor referência a um objeto.
+	 * Mapeia um valor referï¿½ncia a um objeto.
 	 * 
 	 * @param valorRef
-	 *            Valor referência.
+	 *            Valor referï¿½ncia.
 	 * @param objeto
 	 *            Objeto.
 	 * @throws ObjetoJaDeclaradoException
-	 *             Quando esse objeto já foi declarado.
+	 *             Quando esse objeto jï¿½ foi declarado.
 	 */
      public void mapObjeto(ValorRef valorRef, Objeto objeto)
         throws ObjetoJaDeclaradoException {
@@ -329,7 +332,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 * @param valorId
 	 *            O valor a ser associado ao identificador.
 	 * @throws VariavelNaoDeclaradaException
-	 *             Quando a variável não foi declarada.
+	 *             Quando a variï¿½vel nï¿½o foi declarada.
 	 */
     public void changeValor(Id idArg, Valor valorId)
         throws VariavelNaoDeclaradaException {
@@ -355,13 +358,13 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Obtém o valor associado a um determinado identificador.
+	 * Obtï¿½m o valor associado a um determinado identificador.
 	 * 
 	 * @param idArg
 	 *            Identificador
 	 * @return o valor associado a um determinado identificador.
 	 * @throws VariavelNaoDeclaradaException
-	 *             Quando a variável não foi declarada.
+	 *             Quando a variï¿½vel nï¿½o foi declarada.
 	 */
     public Valor get( Id idArg )
         throws VariavelNaoDeclaradaException {
@@ -384,11 +387,11 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 
 
     /**
-	 * Obtém a definição da classe cujo nome é idArg
+	 * Obtï¿½m a definiï¿½ï¿½o da classe cujo nome ï¿½ idArg
 	 * 
 	 * @param idArg
 	 *            Nome da classe.
-	 * @return a definição da classe.
+	 * @return a definiï¿½ï¿½o da classe.
 	 * @throws ClasseNaoDeclaradaException
 	 *             quando nao foi declarada nenhuma classe com esse nome.
 	 */
@@ -400,13 +403,13 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Obtém o objeto associado a um dado valor referencia.
+	 * Obtï¿½m o objeto associado a um dado valor referencia.
 	 * 
 	 * @param valorRef
-	 *            Valor referência
+	 *            Valor referï¿½ncia
 	 * @return o objeto associado a um dado valor referencia.
 	 * @throws ObjetoNaoDeclaradoException
-	 *             Quando o objeto não foi declarado.
+	 *             Quando o objeto nï¿½o foi declarado.
 	 */
     public Objeto getObjeto(ValorRef valorRef)
         throws ObjetoNaoDeclaradoException {
@@ -420,9 +423,9 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Obtém a próxima referência de acordo com o contexto atual de execução.
+	 * Obtï¿½m a prï¿½xima referï¿½ncia de acordo com o contexto atual de execuï¿½ï¿½o.
 	 * 
-	 * @return a próxima referência de acordo com o contexto atual de execução.
+	 * @return a prï¿½xima referï¿½ncia de acordo com o contexto atual de execuï¿½ï¿½o.
 	 */
     public ValorRef getProxRef() {
         ValorRef aux = new ValorRef(proxRef.valor());
@@ -431,7 +434,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Obtém o valor referencia atual.
+	 * Obtï¿½m o valor referencia atual.
 	 * 
 	 * @return o valor referencia atual.
 	 */
@@ -442,9 +445,9 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Retorna a representação textual do contexto de execução.
+	 * Retorna a representaï¿½ï¿½o textual do contexto de execuï¿½ï¿½o.
 	 * 
-	 * @return a representação textual do contexto de execução.
+	 * @return a representaï¿½ï¿½o textual do contexto de execuï¿½ï¿½o.
 	 */
     public String toString() {
         String resposta = null;
@@ -473,10 +476,10 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
     /**
-	 * Obtém um novo contexto de execução com a mesma entrada, saída e pilha de
+	 * Obtï¿½m um novo contexto de execuï¿½ï¿½o com a mesma entrada, saï¿½da e pilha de
 	 * mapeamentos id/valor.
 	 * 
-	 * @return um novo contexto de execução com a mesma entrada, saída e pilha
+	 * @return um novo contexto de execuï¿½ï¿½o com a mesma entrada, saï¿½da e pilha
 	 *         de mapeamentos id/valor.
 	 */
     public ContextoExecucaoOO1 getContextoIdValor() {
@@ -487,13 +490,13 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
     
     /**
-	 * Obtém o valor associado a um determinado identificador.
+	 * Obtï¿½m o valor associado a um determinado identificador.
 	 * 
 	 * @param idArg
 	 *            Identificador
 	 * @return o valor associado a um determinado identificador.
 	 * @throws VariavelNaoDeclaradaException
-	 *             Quando a variável não foi declarada.
+	 *             Quando a variï¿½vel nï¿½o foi declarada.
 	 */
     public Valor getValor( Id idArg )
         throws VariavelNaoDeclaradaException {
@@ -514,4 +517,82 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         }
     }    
 
+    public void runGC(){
+    	
+    	// mark
+    	gcMarcar();
+    	// sweep
+    	gcColetar();
+    }
+
+	private void gcMarcar() {
+		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
+    	
+    	for(HashMap<Id,Valor> posicoesPilha : pilha){
+    		
+    		for(Entry<Id, Valor> mapeamento : posicoesPilha.entrySet()){
+    			
+    			Valor valor = mapeamento.getValue();
+    			if(valor instanceof ValorRef){
+    				todosValoresMapeados.add((ValorRef)valor);
+    				/*try {
+						Objeto objeto = getObjeto((ValorRef)valor);
+						if(!objeto.isMarked()){
+							objeto.setMarked(true);
+							ContextoObjeto estadoObjeto = objeto.getEstado();
+						}
+					} catch (ObjetoNaoDeclaradoException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}*/
+    			}
+    		}
+    	}
+    	
+    	while(!todosValoresMapeados.isEmpty()){
+    		ValorRef referencia = todosValoresMapeados.pop();
+    		try {
+				Objeto objeto = getObjeto(referencia);
+				if(objeto!=null){
+					if(!objeto.isMarked()){
+						objeto.setMarked(true);
+						ContextoObjeto estadoObjeto = objeto.getEstado();
+						if(estadoObjeto!=null){
+							Collection<Valor> valoresMapeados = estadoObjeto.getValoresMapeados();
+							if(valoresMapeados!=null){
+								for(Valor v : valoresMapeados){
+									if(v instanceof ValorRef){
+										todosValoresMapeados.add((ValorRef)v);
+									}
+								}
+							}
+						}
+					}
+				}
+			} catch (ObjetoNaoDeclaradoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+	}
+	
+	private void gcColetar(){
+		LinkedList<ValorRef> referencias = new LinkedList<ValorRef>();
+		for(Entry<ValorRef,Objeto> entries : mapObjetos.entrySet()){
+			ValorRef referencia = entries.getKey();
+			Objeto objeto = entries.getValue();
+			
+			if(objeto.isMarked()){
+				referencias.add(referencia);
+				// limpando para o prÃ³ximo GC
+				objeto.setMarked(false); 
+			}
+		}
+		
+		for(ValorRef referencia : referencias){
+			mapObjetos.remove(referencia);
+		}
+	}
+    
+    
 }
