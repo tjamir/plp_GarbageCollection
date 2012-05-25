@@ -31,6 +31,8 @@ import plp.orientadaObjetos1.util.TipoPrimitivo;
 
 public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 
+	private static long MAX_SIZE_HEAP = 100;
+	
     /**
 	 * A pilha de blocos de contexto.
 	 */
@@ -331,6 +333,9 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 */
      public void mapObjeto(ValorRef valorRef, Objeto objeto)
         throws ObjetoJaDeclaradoException {
+    	if(this.mapObjetos.size()<MAX_SIZE_HEAP){
+    		this.runGC();
+    	}
         if (this.mapObjetos.put(valorRef, objeto) != null) {
             throw new ObjetoJaDeclaradoException(objeto.getClasse());
         }
@@ -530,15 +535,23 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }    
 
     public void runGC(){
-    	
     	// mark
-    	gcMarcar();
+    	long marcar = gcMarcar();
+    	long naoAlcancaveis = mapObjetos.size() - marcar;
+		if(naoAlcancaveis < (0.2*MAX_SIZE_HEAP)){
+			MAX_SIZE_HEAP = MAX_SIZE_HEAP*2;
+		}
+		else{
+			if(naoAlcancaveis > 0.5*MAX_SIZE_HEAP){
+				MAX_SIZE_HEAP = MAX_SIZE_HEAP / 2;
+			}
+		}
     	// sweep
     	gcColetar();
     }
 
-	private void gcMarcar() {
-		garbageColector.marcar(pilha, mapObjetos);
+	private long gcMarcar() {
+		return garbageColector.marcar(pilha, mapObjetos);
 //		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
 //    	
 //    	for(HashMap<Id,Valor> posicoesPilha : pilha){

@@ -11,7 +11,7 @@ import plp.orientadaObjetos1.memoria.Objeto;
 public interface GarbageColector {
 	
 	
-	public void marcar(Stack<HashMap<Id, Valor>> pilha, HashMap<ValorRef, Objeto> mapObjetos);
+	public long marcar(Stack<HashMap<Id, Valor>> pilha, HashMap<ValorRef, Objeto> mapObjetos);
 	
 	public void coletar(HashMap<ValorRef, Objeto> mapObjetos);
 

@@ -14,10 +14,12 @@ import plp.orientadaObjetos1.memoria.Objeto;
 
 public class SimpleMarkSweepGC implements GarbageColector {
 
-	public synchronized void marcar(Stack<HashMap<Id, Valor>> pilha,
+	public synchronized long marcar(Stack<HashMap<Id, Valor>> pilha,
 			HashMap<ValorRef, Objeto> mapObjetos) {
 		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
 
+		long marcados = 0;
+		
 		for (HashMap<Id, Valor> posicoesPilha : pilha) {
 
 			for (Entry<Id, Valor> mapeamento : posicoesPilha.entrySet()) {
@@ -42,6 +44,7 @@ public class SimpleMarkSweepGC implements GarbageColector {
 			if (objeto != null) {
 				if (!objeto.isMarked()) {
 					objeto.setMarked(true);
+					marcados = marcados + 1;
 					ContextoObjeto estadoObjeto = objeto.getEstado();
 					if (estadoObjeto != null) {
 						Collection<Valor> valoresMapeados = estadoObjeto
@@ -57,6 +60,8 @@ public class SimpleMarkSweepGC implements GarbageColector {
 				}
 			}
 		}
+		
+		return marcados;
 	}
 
 	public synchronized void coletar(HashMap<ValorRef, Objeto> mapObjetos) {
