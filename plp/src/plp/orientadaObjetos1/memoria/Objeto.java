@@ -8,7 +8,7 @@ import plp.orientadaObjetos1.expressao.valor.Valor;
 import plp.orientadaObjetos1.expressao.valor.ValorRef;
 /**
  * Conjunto formado pelo nome da classe de um objeto e o seu estado
- * representado pelo ambiente de execução.
+ * representado pelo ambiente de execuï¿½ï¿½o.
  */
 public class Objeto {
     /**
@@ -17,14 +17,20 @@ public class Objeto {
     private Id classeObjeto;
 
     /**
-     * Estado do objeto no ambiente de execução.
+     * Estado do objeto no ambiente de execuï¿½ï¿½o.
      */
     private ContextoObjeto estado;
 
     /**
+     * Atributo usado na implementaÃ§Ã£o de 
+     * Garbage Collection por mark-and-sweep
+     */
+    private boolean gcMarked;
+    
+    /**
      * Construtor.
      * @param classeObjeto Classe a que pertence este objeto.
-     * @param estadoObj Estado do objeto no ambiente de execução.
+     * @param estadoObj Estado do objeto no ambiente de execuï¿½ï¿½o.
      */
     public Objeto(Id classeObjeto,  ContextoObjeto estadoObj) {
         this.classeObjeto = classeObjeto; 
@@ -40,15 +46,15 @@ public class Objeto {
     }
 
     /**
-     * Obtém o atual estado do objeto, conforme o ambiente de execução.
-     * @return o atual estado do objeto, conforme o ambiente de execução.
+     * Obtï¿½m o atual estado do objeto, conforme o ambiente de execuï¿½ï¿½o.
+     * @return o atual estado do objeto, conforme o ambiente de execuï¿½ï¿½o.
      */
     public ContextoObjeto getEstado() {
          return estado;
     }
 
     /**
-     * Altera o ambiente de Execução, que representa o novo estado do objeto.
+     * Altera o ambiente de Execuï¿½ï¿½o, que representa o novo estado do objeto.
      * @param novoEstado o novo estado do objeto.
      */
     public void setEstado(ContextoObjeto novoEstado) {
@@ -83,4 +89,25 @@ public class Objeto {
         }
 	}
 
+	/**
+	 * Retorna se o objeto estÃ¡ marcado como alcanÃ§Ã¡vel.
+	 *  
+	 * @return
+	 */
+	public boolean isMarked() {
+		return gcMarked;
+	}
+
+	/**
+	 * Configura o objeto como alcanÃ§Ã¡vel no processo 
+	 * de coleÃ§Ã£o mark-and-sweep.
+	 * 
+	 * @param marked
+	 */
+	public void setMarked(boolean marked) {
+		this.gcMarked = marked;
+	}
+
+	
+	
 }
