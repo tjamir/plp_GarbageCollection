@@ -24,6 +24,8 @@ import plp.orientadaObjetos1.expressao.valor.ValorNull;
 import plp.orientadaObjetos1.expressao.valor.ValorRef;
 import plp.orientadaObjetos1.expressao.valor.ValorString;
 import plp.orientadaObjetos1.memoria.colecao.ListaValor;
+import plp.orientadaObjetos1.memoria.gc.GarbageColector;
+import plp.orientadaObjetos1.memoria.gc.SimpleMarkSweepGC;
 import plp.orientadaObjetos1.util.Tipo;
 import plp.orientadaObjetos1.util.TipoPrimitivo;
 
@@ -59,6 +61,12 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 * A refer�ncia do objeto a ser inserido na pilha de objetos
 	 */
     private ValorRef proxRef;
+    
+    
+    /**
+     * 
+     */
+    private GarbageColector garbageColector;
 
     /**
 	 * Construtor utilizado quando queremos ler do teclado.
@@ -70,6 +78,8 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 
         mapDefClasse = new HashMap<Id, DefClasse>();    // criacao do mapeamento de classes
         
+        garbageColector = new SimpleMarkSweepGC();
+        
         this.entrada = null;
         this.saida = new ListaValor();
     }
@@ -78,6 +88,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 * Construtor da classe.
 	 */
     public ContextoExecucaoOO1(AmbienteExecucaoOO1 ambiente) throws VariavelJaDeclaradaException{
+    	
        proxRef = ambiente.getRef();
        this.mapObjetos = ambiente.getMapObjetos();
        this.mapDefClasse = ambiente.getMapDefClasse();
@@ -87,6 +98,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	   HashMap<Id, Valor> aux = new HashMap<Id, Valor>();
        aux.put(new Id("this"), new ValorNull());
        pilha.push(aux);
+       this.garbageColector=ambiente.getGarbageColector();
 
   }
 
@@ -526,72 +538,78 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }
 
 	private void gcMarcar() {
-		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
-    	
-    	for(HashMap<Id,Valor> posicoesPilha : pilha){
-    		
-    		for(Entry<Id, Valor> mapeamento : posicoesPilha.entrySet()){
-    			
-    			Valor valor = mapeamento.getValue();
-    			if(valor instanceof ValorRef){
-    				todosValoresMapeados.add((ValorRef)valor);
-    				/*try {
-						Objeto objeto = getObjeto((ValorRef)valor);
-						if(!objeto.isMarked()){
-							objeto.setMarked(true);
-							ContextoObjeto estadoObjeto = objeto.getEstado();
-						}
-					} catch (ObjetoNaoDeclaradoException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-    			}
-    		}
-    	}
-    	
-    	while(!todosValoresMapeados.isEmpty()){
-    		ValorRef referencia = todosValoresMapeados.pop();
-    		try {
-				Objeto objeto = getObjeto(referencia);
-				if(objeto!=null){
-					if(!objeto.isMarked()){
-						objeto.setMarked(true);
-						ContextoObjeto estadoObjeto = objeto.getEstado();
-						if(estadoObjeto!=null){
-							Collection<Valor> valoresMapeados = estadoObjeto.getValoresMapeados();
-							if(valoresMapeados!=null){
-								for(Valor v : valoresMapeados){
-									if(v instanceof ValorRef){
-										todosValoresMapeados.add((ValorRef)v);
-									}
-								}
-							}
-						}
-					}
-				}
-			} catch (ObjetoNaoDeclaradoException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
+		garbageColector.marcar(pilha, mapObjetos);
+//		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
+//    	
+//    	for(HashMap<Id,Valor> posicoesPilha : pilha){
+//    		
+//    		for(Entry<Id, Valor> mapeamento : posicoesPilha.entrySet()){
+//    			
+//    			Valor valor = mapeamento.getValue();
+//    			if(valor instanceof ValorRef){
+//    				todosValoresMapeados.add((ValorRef)valor);
+//    				/*try {
+//						Objeto objeto = getObjeto((ValorRef)valor);
+//						if(!objeto.isMarked()){
+//							objeto.setMarked(true);
+//							ContextoObjeto estadoObjeto = objeto.getEstado();
+//						}
+//					} catch (ObjetoNaoDeclaradoException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}*/
+//    			}
+//    		}
+//    	}
+//    	
+//    	while(!todosValoresMapeados.isEmpty()){
+//    		ValorRef referencia = todosValoresMapeados.pop();
+//    		try {
+//				Objeto objeto = getObjeto(referencia);
+//				if(objeto!=null){
+//					if(!objeto.isMarked()){
+//						objeto.setMarked(true);
+//						ContextoObjeto estadoObjeto = objeto.getEstado();
+//						if(estadoObjeto!=null){
+//							Collection<Valor> valoresMapeados = estadoObjeto.getValoresMapeados();
+//							if(valoresMapeados!=null){
+//								for(Valor v : valoresMapeados){
+//									if(v instanceof ValorRef){
+//										todosValoresMapeados.add((ValorRef)v);
+//									}
+//								}
+//							}
+//						}
+//					}
+//				}
+//			} catch (ObjetoNaoDeclaradoException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    	}
 	}
 	
 	private void gcColetar(){
-		LinkedList<ValorRef> referencias = new LinkedList<ValorRef>();
-		for(Entry<ValorRef,Objeto> entries : mapObjetos.entrySet()){
-			ValorRef referencia = entries.getKey();
-			Objeto objeto = entries.getValue();
-			
-			if(objeto.isMarked()){
-				referencias.add(referencia);
-				// limpando para o próximo GC
-				objeto.setMarked(false); 
-			}
-		}
-		
-		for(ValorRef referencia : referencias){
-			mapObjetos.remove(referencia);
-		}
+		garbageColector.coletar(mapObjetos);
+//		LinkedList<ValorRef> referencias = new LinkedList<ValorRef>();
+//		for(Entry<ValorRef,Objeto> entries : mapObjetos.entrySet()){
+//			ValorRef referencia = entries.getKey();
+//			Objeto objeto = entries.getValue();
+//			
+//			if(objeto.isMarked()){
+//				referencias.add(referencia);
+//				// limpando para o próximo GC
+//				objeto.setMarked(false); 
+//			}
+//		}
+//		
+//		for(ValorRef referencia : referencias){
+//			mapObjetos.remove(referencia);
+//		}
+	}
+
+	public GarbageColector getGarbageColector() {
+		return garbageColector;
 	}
     
     

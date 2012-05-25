@@ -11,36 +11,37 @@ import plp.orientadaObjetos1.excecao.execucao.EntradaInvalidaException;
 import plp.orientadaObjetos1.expressao.valor.Valor;
 import plp.orientadaObjetos1.expressao.valor.ValorRef;
 import plp.orientadaObjetos1.memoria.colecao.ListaValor;
+import plp.orientadaObjetos1.memoria.gc.GarbageColector;
 import plp.orientadaObjetos1.util.Tipo;
 
 /**
- * Classe que representa um ambiente de execução, contendo om mapeamento
+ * Classe que representa um ambiente de execuï¿½ï¿½o, contendo om mapeamento
  * entre identificadores e valores.
  */
 public interface AmbienteExecucaoOO1 extends AmbienteOO1<Valor> {
     /**
-     * Obtém a pilha de valores associados a identificadores
+     * Obtï¿½m a pilha de valores associados a identificadores
      * @return a pilha de valores associados a identificadores.
      */
 	public Stack<HashMap<Id, Valor>> getPilha();
 
     /**
-     * Retorna a pilha com as definiçoes das classes.
-     * @return a pilha com as definiçoes das classes.
+     * Retorna a pilha com as definiï¿½oes das classes.
+     * @return a pilha com as definiï¿½oes das classes.
      */
     public HashMap<Id, DefClasse> getMapDefClasse();
 
     /**
-     * Obtém o mapeamento com os objetos e seus valores.
+     * Obtï¿½m o mapeamento com os objetos e seus valores.
      * @return o mapeamento com os objetos e seus valores.
      */
     public HashMap<ValorRef, Objeto> getMapObjetos();
 
     /**
-     * Mapeia um valor referência a um objeto.
-     * @param valorRef Valor referência.
+     * Mapeia um valor referï¿½ncia a um objeto.
+     * @param valorRef Valor referï¿½ncia.
      * @param objeto Objeto.
-     * @throws ObjetoJaDeclaradoException Quando esse objeto já foi declarado.
+     * @throws ObjetoJaDeclaradoException Quando esse objeto jï¿½ foi declarado.
      */
     public void mapObjeto(ValorRef valorRef, Objeto objeto) throws ObjetoJaDeclaradoException;
 
@@ -48,74 +49,82 @@ public interface AmbienteExecucaoOO1 extends AmbienteOO1<Valor> {
      * Altera o valor associado a um identificador.
      * @param idArg Identificador.
      * @param valorId O valor a ser associado ao identificador.
-     * @throws VariavelNaoDeclaradaException Quando a variável não foi
+     * @throws VariavelNaoDeclaradaException Quando a variï¿½vel nï¿½o foi
      * declarada.
      */
     public void changeValor(Id idArg, Valor valorId) throws VariavelNaoDeclaradaException;
 
     /**
-     * Obtém o objeto associado a um dado valor referencia.
-     * @param valorRef Valor referência
+     * Obtï¿½m o objeto associado a um dado valor referencia.
+     * @param valorRef Valor referï¿½ncia
      * @return o objeto associado a um dado valor referencia.
-     * @throws ObjetoNaoDeclaradoException Quando o objeto não foi declarado.
+     * @throws ObjetoNaoDeclaradoException Quando o objeto nï¿½o foi declarado.
      */
     public Objeto getObjeto(ValorRef valorRef) throws ObjetoNaoDeclaradoException;
 
     /**
-     * Obtém a próxima referência de acordo com o contexto atual de execução.
-     * @return a próxima referência de acordo com o contexto atual de execução.
+     * Obtï¿½m a prï¿½xima referï¿½ncia de acordo com o contexto atual de execuï¿½ï¿½o.
+     * @return a prï¿½xima referï¿½ncia de acordo com o contexto atual de execuï¿½ï¿½o.
      */
     public ValorRef getProxRef();
 
     /**
-     * Obtém o valor referencia atual.
+     * Obtï¿½m o valor referencia atual.
      * @return o  valor referencia atual.
      */
     public ValorRef getRef();
 
     /**
-     * Lê da entrada padrão e associa o conteúdo a um determinado identificador.
-     * @param tipoIdLido Tipo do identificador ao qual será associado o valor
+     * Lï¿½ da entrada padrï¿½o e associa o conteï¿½do a um determinado identificador.
+     * @param tipoIdLido Tipo do identificador ao qual serï¿½ associado o valor
      * lido.
      * @return o valor lido.
-     * @throws EntradaInvalidaException Quando a entrada fornecida não pode
-     * ser atribuída ao tipo do identificador.
+     * @throws EntradaInvalidaException Quando a entrada fornecida nï¿½o pode
+     * ser atribuï¿½da ao tipo do identificador.
      */
     public Valor read(Tipo tipoIdLido) throws EntradaInvalidaException;
 
     /**
-     * Escreve um valor 'v' na saída.
+     * Escreve um valor 'v' na saï¿½da.
      * @param v O valor a ser escrito.
-     * @return o ambiente de execução, que representa o estado atual.
+     * @return o ambiente de execuï¿½ï¿½o, que representa o estado atual.
      */
     public AmbienteExecucaoOO1 write(Valor v);
 
     /**
-     * Obtém a entrada.
+     * Obtï¿½m a entrada.
      * @return a entrada.
      */
     public ListaValor getEntrada();
 
     /**
-     * Obtém a saída.
-     * @return a saída.
+     * Obtï¿½m a saï¿½da.
+     * @return a saï¿½da.
      */
     public ListaValor getSaida();
 
     /**
-     * Obtém um novo contexto de execução com a mesma entrada, saída e pilha
+     * Obtï¿½m um novo contexto de execuï¿½ï¿½o com a mesma entrada, saï¿½da e pilha
      * de mapeamentos id/valor.
-     * @return um novo contexto de execução com a mesma entrada, saída e pilha
+     * @return um novo contexto de execuï¿½ï¿½o com a mesma entrada, saï¿½da e pilha
      * de mapeamentos id/valor.
      */
     public ContextoExecucaoOO1 getContextoIdValor();
     
     /**
-     * Obtém o valor associado a um determinado identificador.
+     * Obtï¿½m o valor associado a um determinado identificador.
      * @param idArg Identificador
      * @return o valor associado a um determinado identificador.
-     * @throws VariavelNaoDeclaradaException Quando a variável não foi
+     * @throws VariavelNaoDeclaradaException Quando a variï¿½vel nï¿½o foi
      * declarada.
      */
     public Valor getValor(Id idArg) throws VariavelNaoDeclaradaException;
+    
+    /**
+     * ObtÃ©m o GarbageColector do ambiente
+     * @return o garbage colector do ambiente
+     * 
+     */
+    
+    public GarbageColector getGarbageColector();
 }
