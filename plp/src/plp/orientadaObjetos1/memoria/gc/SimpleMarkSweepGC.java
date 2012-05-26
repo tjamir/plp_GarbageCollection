@@ -71,9 +71,12 @@ public class SimpleMarkSweepGC implements GarbageColector {
 			Objeto objeto = entries.getValue();
 			
 			if(objeto.isMarked()){
-				referencias.add(referencia);
 				// limpando para o próximo GC
 				objeto.setMarked(false); 
+			}
+			else{
+				// não está marcado, não é alcançável
+				referencias.add(referencia);
 			}
 		}
 		
@@ -81,6 +84,8 @@ public class SimpleMarkSweepGC implements GarbageColector {
 			mapObjetos.remove(referencia);
 		}
 
+		System.gc();
+		
 	}
 
 }
