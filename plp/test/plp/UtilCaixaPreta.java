@@ -1,6 +1,7 @@
 package plp;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class UtilCaixaPreta {
@@ -116,7 +117,7 @@ public class UtilCaixaPreta {
 		data.add(new Object[] { "let var x = true in length x", "false", false, true, false });
 		data.add(new Object[] { "let var x = false in length x", "true", false, true, false });
 
-		//TEST Declaração Colateral
+		//TEST Declaraï¿½ï¿½o Colateral
 		data.add(new Object[] {"let var x =2, var y = x in x + 1", "true", true, true, true });
 
 		//TEST Escopo
@@ -844,6 +845,28 @@ public class UtilCaixaPreta {
 				"    } "
 				,"O int lido foi: 1 O boolean lido foi: true ", true, true, false });		
 
+		return data;
+	}
+
+	public static Collection<? extends Object[]> getEntradaGCTest() {
+		ArrayList<Object[]> data = new ArrayList<Object[]>();	
+		data.add(new Object[] {"    { "  +
+				"       classe Contador { "  +
+				"           int valor = 1; "  +
+				"           proc print() { "  +
+				"             write(this.valor) "  +
+				"           } "  +
+				"       }      "  +
+				"       ; "  +
+				"  "  +
+				"       { "  +
+				"         Contador c := new Contador "  +
+				"         ; "  +
+				" 	write(\"Teste do write\"); "  +
+				"         c.print() "  +
+				"      } "  +
+				"  "  +
+				"    } ",0});
 		return data;
 	}
 
