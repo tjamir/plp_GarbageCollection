@@ -867,6 +867,118 @@ public class UtilCaixaPreta {
 				"      } "  +
 				"  "  +
 				"    } ",0});
+
+		data.add(new Object[]{
+				" { "  +
+				"     classe LValor { "  +
+				"         int valor = -100, "  +
+				"         LValor prox = null; "  +
+				"  "  +
+				"         proc insere(int v) { "  +
+				"             { "  +
+				"                 LValor aux = this; "  +
+				"                 while ( not(aux.prox == null) ) do { "  +
+				"                    aux := aux.prox "  +
+				"                 }; "  +
+				"                 aux.prox := new LValor; "  +
+				"                 aux.valor := v "  +
+				"             } "  +
+				"         }, "  +
+				"  "  +
+				"         proc remove(int v) { "  +
+				"             { "  +
+				"  "  +
+				"             LValor aux = this; "  +
+				"             while( not( (aux.prox == null)  or (((aux).prox).valor == v) ) ) do { "  +
+				"                 aux := aux.prox "  +
+				"             }; "  +
+				"             if ( not( aux.prox == null) ) then { "  +
+				"                 aux.prox := ((aux).prox).prox "  +
+				"             } "  +
+				"  "  +
+				"             } "  +
+				"         }, "  +
+				"  "  +
+				"         proc print() { "  +
+				"             write(this.valor); "  +
+				"             if ( not( this.prox == null) ) then { "  +
+				"                 (this).prox.print() "  +
+				"             } "  +
+				"         } "  +
+				"     }; "  +
+				"  "  +
+				"     { "  +
+				"         LValor lv := new LValor, "  +
+				"		  int i = 0;"+
+				"		  while not(i==97) do {"+
+				"			lv.insere(i);"+
+				"			i:=i+1"+
+				"		  };"+
+				"		  lv.prox := new LValor;"+
+				"		  lv.insere(2);"+
+				"		  lv.insere(100);"+
+				"		  lv.insere(1000)"+
+				"  } "  +
+				" } "	
+		, 97});
+		
+//		data.add(new Object[]{
+//		"{"+
+//"	classe Nolista {"+
+//"		int valor = 0,"+
+//""+
+//"		Nolista proximo = null;"+
+//""+          
+//"		proc imprimeValor(){"+
+//"			write(this.valor)"+
+//"		}"+
+//"	},"+
+//""+
+//"	classe Pilha {"+
+//"		Nolista topo = null,"+
+//"		int valor = 0;"+
+//""+      	   
+////"		proc inserir(int val){"+
+////"			Nolista n := new Nolista;"+
+////"			n.valor = val;"+
+////"			n.proximo = this.topo;"+
+////"			this.topo=n;"+
+////"		},"+
+////""+      	   
+//"		proc pop(){"+
+//"			write(\"teste\")"+
+////"			this.valor=this.topo.valor;"+
+////"			this.topo=this.topo.proximo;"+
+//"		}"+
+//	   
+//"	}"+
+//"	;"+
+//
+//"	{" +
+//"	Pilha pilha := new Pilha,"+
+//"	int i=1;"+
+//
+//"	while(i<=100){"+
+//"		pilha.push(i);"+
+//"		i=i+1;"+
+//"	}"+
+//
+//"	int j=0;"+
+//"	while(i<=200){"+
+//"		if(j>=3){"+
+//"			pilha.pop();"+
+//"			write(\"Removido da pilha: \" + pilha.valor);"+
+//"			j=0;"+
+//"		}"+
+//"		pilha.push(i);"+
+//"		i=i+1;"+
+//"		j=j+1;"+
+//
+//"	}" +
+//"	}"+
+//
+//"}",0
+//});		
 		return data;
 	}
 

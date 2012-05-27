@@ -1,58 +1,54 @@
-   {
-      classe Nolista {
-          int valor = 0,
-          
-          NoLista proximo = null;
-          
-          proc imprimeValor(){
-            write(valor)
-          }
-      }     
-      ,
-      
-      classe Pilha{
-      	   Nolista topo = null,
-      	   int valor=0;
-      	   
-      	   proc inserir(int val){
-      	    Nolista n := null;
-      	   	n.valor = val;
-      	   	n.proximo = this.topo;
-      	   	this.topo=n
-      	   }
-      	   ,
-      	   
-           proc pop(){
-            this.valor=this.topo.valor;
-            this.top=this.topo.proximo
-           }
-      	   
-      	   
-      }
-      ;
+{
+	classe Nolista {
+		int valor = 0,
 
-      {
-	Pilha pilha=new Pilha;
-	
-	
+		Nolista proximo = null;
+          
+		proc imprimeValor(){
+			write(valor)
+		}
+	}     
+	,
+
+	classe Pilha{
+		Nolista topo = null,
+		int valor=0;
+      	   
+		proc inserir(int val){
+			Nolista n := null;
+			n.valor = val;
+			n.proximo = this.topo;
+			this.topo=n;
+		}
+		,
+      	   
+		proc pop(){
+			this.valor=this.topo.valor;
+			this.topo=this.topo.proximo;
+		}
+      	   
+	}
+	;
+
+	Pilha pilha := new Pilha;
 	int i=1;
 	
 	while(i<=100){
-	 pilha.push(i);
-	 i=i+1;
+		pilha.push(i);
+		i=i+1;
 	}
+	
 	int j=0;
 	while(i<=200){
-	 if(j>=3){
-	   pilha.pop();
-	   write("Removido da pilha: " +pilha.valor);
-	   j=0;
-	 }
-	 pilha.push(i);
-	 i=i+1;
-	 j=j+1;
+		if(j>=3){
+			pilha.pop();
+			write("Removido da pilha: " + pilha.valor);
+			j=0;
+		}
+		pilha.push(i);
+		i=i+1;
+		j=j+1;
 	 
 	}
-	
-	
-   }
+
+}
