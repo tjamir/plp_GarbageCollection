@@ -922,63 +922,68 @@ public class UtilCaixaPreta {
 				" } "	
 		, 97});
 		
-//		data.add(new Object[]{
-//		"{"+
-//"	classe Nolista {"+
-//"		int valor = 0,"+
-//""+
-//"		Nolista proximo = null;"+
-//""+          
-//"		proc imprimeValor(){"+
-//"			write(this.valor)"+
-//"		}"+
-//"	},"+
-//""+
-//"	classe Pilha {"+
-//"		Nolista topo = null,"+
-//"		int valor = 0;"+
-//""+      	   
-////"		proc inserir(int val){"+
-////"			Nolista n := new Nolista;"+
-////"			n.valor = val;"+
-////"			n.proximo = this.topo;"+
-////"			this.topo=n;"+
-////"		},"+
-////""+      	   
-//"		proc pop(){"+
-//"			write(\"teste\")"+
-////"			this.valor=this.topo.valor;"+
-////"			this.topo=this.topo.proximo;"+
-//"		}"+
-//	   
-//"	}"+
-//"	;"+
-//
-//"	{" +
-//"	Pilha pilha := new Pilha,"+
-//"	int i=1;"+
-//
-//"	while(i<=100){"+
-//"		pilha.push(i);"+
-//"		i=i+1;"+
-//"	}"+
-//
-//"	int j=0;"+
-//"	while(i<=200){"+
-//"		if(j>=3){"+
-//"			pilha.pop();"+
-//"			write(\"Removido da pilha: \" + pilha.valor);"+
-//"			j=0;"+
-//"		}"+
-//"		pilha.push(i);"+
-//"		i=i+1;"+
-//"		j=j+1;"+
-//
-//"	}" +
-//"	}"+
-//
-//"}",0
-//});		
+		data.add(new Object[]{
+	"{"+
+"	classe Nolista {"+
+"		int valor = 0,"+
+""+
+"		Nolista proximo = null;"+
+""+          
+"		proc imprimeValor(){"+
+"			write(this.valor)"+
+"		}"+
+"	},"+
+""+
+"	classe Pilha {"+
+"		Nolista topo = null,"+
+"		int valor = 0;"+
+""+      	   
+"		proc push(int val){"+
+"			{"+
+"			Nolista n := new Nolista;"+
+"			n.valor := val;"+
+"			n.proximo := this.topo;"+
+"			this.topo:=n"+
+"			}"+
+"		},"+
+""+      	   
+"		proc pop(){"+
+//"			{"+
+//"			write(\"teste\");"+
+"			this.valor:=(this.topo).valor;"+
+"			this.topo:=(this.topo).proximo"+
+//"			}"+
+"		}"+
+	   
+"	}"+
+"	;"+
+
+"	{" +
+"	Pilha pilha := new Pilha,"+
+"	int j=0,"+
+"	int i=1;"+
+
+"	while not(i==100) do{"+
+"		pilha.push(i);"+
+"		i:=i+1"+
+"	};"+
+
+
+"	while not(i==201) do {"+
+"		if (j==3) then{"+
+"			pilha.pop();"+
+"			write(\"Removido da pilha: \" ++ pilha.valor);"+
+"			j:=0"+
+"		};"+
+"		pilha.push(i);"+
+"		i:=i+1;"+
+"		j:=j+1"+
+
+"	}" +
+"	}"+
+
+"}",33
+});		
 		return data;
 	}
 

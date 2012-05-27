@@ -334,7 +334,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 */
      public void mapObjeto(ValorRef valorRef, Objeto objeto)
         throws ObjetoJaDeclaradoException {
-    	if(this.mapObjetos.size()>MAX_SIZE_HEAP){
+    	if(this.mapObjetos.size()>=MAX_SIZE_HEAP){
     		this.runGC();
     	}
         if (this.mapObjetos.put(valorRef, objeto) != null) {
