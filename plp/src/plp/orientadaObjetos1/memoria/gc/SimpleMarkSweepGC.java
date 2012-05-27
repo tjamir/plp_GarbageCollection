@@ -14,6 +14,12 @@ import plp.orientadaObjetos1.memoria.Objeto;
 
 public class SimpleMarkSweepGC implements GarbageColector {
 
+	
+	/**
+	 * Referência para teste unitário
+	 */
+	public long contadorReferenciasColetadas = 0;
+	
 	public synchronized long marcar(Stack<HashMap<Id, Valor>> pilha,
 			HashMap<ValorRef, Objeto> mapObjetos) {
 		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
@@ -82,10 +88,15 @@ public class SimpleMarkSweepGC implements GarbageColector {
 		
 		for(ValorRef referencia : referencias){
 			mapObjetos.remove(referencia);
+			contadorReferenciasColetadas++;
 		}
 
 		System.gc();
 		
 	}
 
+	public synchronized long referenciasColetadas(){
+		return contadorReferenciasColetadas;
+	}
+	
 }

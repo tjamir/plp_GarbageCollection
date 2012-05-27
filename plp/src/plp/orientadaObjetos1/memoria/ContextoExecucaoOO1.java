@@ -119,8 +119,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         
         this.entrada = entrada;
         this.saida = new ListaValor();
-        
-        this.garbageColector=new SimpleMarkSweepGC();
+        this.garbageColector = new SimpleMarkSweepGC();
     }
 
     /**
