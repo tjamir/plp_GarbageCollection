@@ -536,9 +536,8 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
     }    
 
     public void runGC(){
-    	// mark
-    	long marcar = gcMarcar();
-    	long naoAlcancaveis = mapObjetos.size() - marcar;
+    	// coletar
+    	long naoAlcancaveis = this.garbageColector.runGC(pilha, mapObjetos);
 		if(naoAlcancaveis < (0.2*MAX_SIZE_HEAP)){
 			MAX_SIZE_HEAP = MAX_SIZE_HEAP*2;
 		}
@@ -547,80 +546,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 				MAX_SIZE_HEAP = MAX_SIZE_HEAP / 2;
 			}
 		}
-    	// sweep
-    	gcColetar();
     }
-
-	private long gcMarcar() {
-		return garbageColector.marcar(pilha, mapObjetos);
-//		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
-//    	
-//    	for(HashMap<Id,Valor> posicoesPilha : pilha){
-//    		
-//    		for(Entry<Id, Valor> mapeamento : posicoesPilha.entrySet()){
-//    			
-//    			Valor valor = mapeamento.getValue();
-//    			if(valor instanceof ValorRef){
-//    				todosValoresMapeados.add((ValorRef)valor);
-//    				/*try {
-//						Objeto objeto = getObjeto((ValorRef)valor);
-//						if(!objeto.isMarked()){
-//							objeto.setMarked(true);
-//							ContextoObjeto estadoObjeto = objeto.getEstado();
-//						}
-//					} catch (ObjetoNaoDeclaradoException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}*/
-//    			}
-//    		}
-//    	}
-//    	
-//    	while(!todosValoresMapeados.isEmpty()){
-//    		ValorRef referencia = todosValoresMapeados.pop();
-//    		try {
-//				Objeto objeto = getObjeto(referencia);
-//				if(objeto!=null){
-//					if(!objeto.isMarked()){
-//						objeto.setMarked(true);
-//						ContextoObjeto estadoObjeto = objeto.getEstado();
-//						if(estadoObjeto!=null){
-//							Collection<Valor> valoresMapeados = estadoObjeto.getValoresMapeados();
-//							if(valoresMapeados!=null){
-//								for(Valor v : valoresMapeados){
-//									if(v instanceof ValorRef){
-//										todosValoresMapeados.add((ValorRef)v);
-//									}
-//								}
-//							}
-//						}
-//					}
-//				}
-//			} catch (ObjetoNaoDeclaradoException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//    	}
-	}
-	
-	private void gcColetar(){
-		garbageColector.coletar(mapObjetos);
-//		LinkedList<ValorRef> referencias = new LinkedList<ValorRef>();
-//		for(Entry<ValorRef,Objeto> entries : mapObjetos.entrySet()){
-//			ValorRef referencia = entries.getKey();
-//			Objeto objeto = entries.getValue();
-//			
-//			if(objeto.isMarked()){
-//				referencias.add(referencia);
-//				// limpando para o próximo GC
-//				objeto.setMarked(false); 
-//			}
-//		}
-//		
-//		for(ValorRef referencia : referencias){
-//			mapObjetos.remove(referencia);
-//		}
-	}
 
 	public GarbageColector getGarbageColector() {
 		return garbageColector;

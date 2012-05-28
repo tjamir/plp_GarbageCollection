@@ -20,11 +20,19 @@ public class SimpleMarkSweepGC implements GarbageColector {
 	 */
 	public long contadorReferenciasColetadas = 0;
 	
-	public synchronized long marcar(Stack<HashMap<Id, Valor>> pilha,
+	public long runGC(Stack<HashMap<Id, Valor>> pilha,
+			HashMap<ValorRef, Objeto> mapObjetos) {
+		// mark
+    	this.marcar(pilha, mapObjetos);
+    	// sweep
+    	long naoAlcancaveis = this.coletar(mapObjetos);
+		return naoAlcancaveis;
+	}
+	
+	private synchronized void marcar(Stack<HashMap<Id, Valor>> pilha,
 			HashMap<ValorRef, Objeto> mapObjetos) {
 		LinkedList<ValorRef> todosValoresMapeados = new LinkedList<ValorRef>();
 
-		long marcados = 0;
 		
 		for (HashMap<Id, Valor> posicoesPilha : pilha) {
 
@@ -33,13 +41,6 @@ public class SimpleMarkSweepGC implements GarbageColector {
 				Valor valor = mapeamento.getValue();
 				if (valor instanceof ValorRef) {
 					todosValoresMapeados.add((ValorRef) valor);
-					/*
-					 * try { Objeto objeto = getObjeto((ValorRef)valor);
-					 * if(!objeto.isMarked()){ objeto.setMarked(true);
-					 * ContextoObjeto estadoObjeto = objeto.getEstado(); } }
-					 * catch (ObjetoNaoDeclaradoException e) { // TODO
-					 * Auto-generated catch block e.printStackTrace(); }
-					 */
 				}
 			}
 
@@ -50,7 +51,6 @@ public class SimpleMarkSweepGC implements GarbageColector {
 			if (objeto != null) {
 				if (!objeto.isMarked()) {
 					objeto.setMarked(true);
-					marcados = marcados + 1;
 					ContextoObjeto estadoObjeto = objeto.getEstado();
 					if (estadoObjeto != null) {
 						Collection<Valor> valoresMapeados = estadoObjeto
@@ -67,11 +67,11 @@ public class SimpleMarkSweepGC implements GarbageColector {
 			}
 		}
 		
-		return marcados;
 	}
 
-	public synchronized void coletar(HashMap<ValorRef, Objeto> mapObjetos) {
+	private synchronized long coletar(HashMap<ValorRef, Objeto> mapObjetos) {
 		LinkedList<ValorRef> referencias = new LinkedList<ValorRef>();
+		long naoAlcancaveisCount = 0;
 		for(Entry<ValorRef,Objeto> entries : mapObjetos.entrySet()){
 			ValorRef referencia = entries.getKey();
 			Objeto objeto = entries.getValue();
@@ -83,9 +83,9 @@ public class SimpleMarkSweepGC implements GarbageColector {
 			else{
 				// não está marcado, não é alcançável
 				referencias.add(referencia);
+				naoAlcancaveisCount += 1;
 			}
 		}
-		
 		for(ValorRef referencia : referencias){
 			mapObjetos.remove(referencia);
 			contadorReferenciasColetadas++;
@@ -93,6 +93,7 @@ public class SimpleMarkSweepGC implements GarbageColector {
 
 		System.gc();
 		
+		return naoAlcancaveisCount;
 	}
 
 	public synchronized long referenciasColetadas(){
