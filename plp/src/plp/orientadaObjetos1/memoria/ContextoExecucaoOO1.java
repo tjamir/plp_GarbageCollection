@@ -26,6 +26,7 @@ import plp.orientadaObjetos1.expressao.valor.ValorString;
 import plp.orientadaObjetos1.memoria.colecao.ListaValor;
 import plp.orientadaObjetos1.memoria.gc.GarbageColector;
 import plp.orientadaObjetos1.memoria.gc.SimpleMarkSweepGC;
+import plp.orientadaObjetos1.memoria.gc.TriColorIncrementalGC;
 import plp.orientadaObjetos1.util.Tipo;
 import plp.orientadaObjetos1.util.TipoPrimitivo;
 
@@ -80,7 +81,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 
         mapDefClasse = new HashMap<Id, DefClasse>();    // criacao do mapeamento de classes
         
-        garbageColector = new SimpleMarkSweepGC();
+        garbageColector = createGc();
         
         this.entrada = null;
         this.saida = new ListaValor();
@@ -119,7 +120,15 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         
         this.entrada = entrada;
         this.saida = new ListaValor();
-        this.garbageColector = new SimpleMarkSweepGC();
+        this.garbageColector = createGc();
+    }
+    
+    /**
+     * Método auxiliar para construir o GarbageCollection
+     */
+    
+    public GarbageColector createGc(){
+    	return new TriColorIncrementalGC();
     }
 
     /**
@@ -550,6 +559,10 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 
 	public GarbageColector getGarbageColector() {
 		return garbageColector;
+	}
+
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, Objeto objeto) {
+		garbageColector.writeBarrier(mapObjetos, objeto);
 	}
     
     

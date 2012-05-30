@@ -99,5 +99,10 @@ public class SimpleMarkSweepGC implements GarbageColector {
 	public synchronized long referenciasColetadas(){
 		return contadorReferenciasColetadas;
 	}
+
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, Objeto objeto) {
+		
+		//Não faz nada. Esse garbage collector não é incremental
+	}
 	
 }

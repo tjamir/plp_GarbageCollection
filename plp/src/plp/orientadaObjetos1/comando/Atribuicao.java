@@ -14,23 +14,23 @@ import plp.orientadaObjetos1.memoria.AmbienteExecucaoOO1;
 import plp.orientadaObjetos1.memoria.Objeto;
 import plp.orientadaObjetos1.util.TipoClasse;
 /**
- * Classe que representa um comando de atribuição.
+ * Classe que representa um comando de atribuiï¿½ï¿½o.
  */
 public class Atribuicao implements Comando {
 	/**
-	 * Lado esquerdo do comando de atribuição.
+	 * Lado esquerdo do comando de atribuiï¿½ï¿½o.
 	 */
     protected LeftExpression av;
     
 	/**
-	 * Expressão cujo valor será atribuído ao lado esquerdo.
+	 * Expressï¿½o cujo valor serï¿½ atribuï¿½do ao lado esquerdo.
 	 */
     protected Expressao expressao;
     
 	/**
 	 * Construtor.
 	 * @param av Lado esquerdo
-	 * @param expressao Expressão cujo valor será atribuído ao lado esquerdo.
+	 * @param expressao Expressï¿½o cujo valor serï¿½ atribuï¿½do ao lado esquerdo.
 	 */
     public Atribuicao(LeftExpression av, Expressao expressao){
         this.av = av;
@@ -38,11 +38,11 @@ public class Atribuicao implements Comando {
     }
 
     /**
-     * Executa  a atribuição.
+     * Executa  a atribuiï¿½ï¿½o.
      *
      * @param ambiente o ambiente que contem o mapeamento entre identificadores
      *  e valores.
-     * @return o ambiente modificado pela execução da atribuição.
+     * @return o ambiente modificado pela execuï¿½ï¿½o da atribuiï¿½ï¿½o.
      * @throws ClasseNaoDeclaradaException 
      *
      */
@@ -57,7 +57,9 @@ public class Atribuicao implements Comando {
             Expressao expAV = ((AcessoAtributo)av).getExpressaoObjeto();
             ValorRef referencia = (ValorRef)expAV.avaliar(ambiente);
             Objeto obj = ambiente.getObjeto(referencia);
+            ambiente.writeBarrier(ambiente.getMapObjetos(), obj);
             obj.changeAtributo(idVariavel, expressao.avaliar(ambiente));
+            
         }
         else
             ambiente.changeValor(idVariavel, expressao.avaliar(ambiente));
@@ -65,13 +67,13 @@ public class Atribuicao implements Comando {
     }
 
     /**
-     * Um comando de atribuição está bem tipado, se o tipo do identificador é
-     * o mesmo da expressão. O tipo de um identificador é determinado pelo
-     * tipo da expressão que o inicializou (na declaração).
+     * Um comando de atribuiï¿½ï¿½o estï¿½ bem tipado, se o tipo do identificador ï¿½
+     * o mesmo da expressï¿½o. O tipo de um identificador ï¿½ determinado pelo
+     * tipo da expressï¿½o que o inicializou (na declaraï¿½ï¿½o).
      *
      * @param ambiente o ambiente que contem o mapeamento entre identificadores
      *  e valores.
-     * @return <code>true</code> se os tipos da atribuição são válidos;
+     * @return <code>true</code> se os tipos da atribuiï¿½ï¿½o sï¿½o vï¿½lidos;
      *          <code>false</code> caso contrario.
      *
      */

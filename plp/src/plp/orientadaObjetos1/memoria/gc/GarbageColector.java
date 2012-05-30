@@ -20,4 +20,6 @@ public interface GarbageColector {
 	 */
 	public long referenciasColetadas();
 
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, Objeto objeto);
+
 }

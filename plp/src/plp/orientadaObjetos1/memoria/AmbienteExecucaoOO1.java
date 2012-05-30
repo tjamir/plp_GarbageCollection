@@ -127,4 +127,12 @@ public interface AmbienteExecucaoOO1 extends AmbienteOO1<Valor> {
      */
     
     public GarbageColector getGarbageColector();
+    
+    
+    /**
+     * 
+     * Executa o bloqueio de escrita do garbage collector, caso o mesmo seja temporal
+     * 
+     */
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, Objeto objeto);
 }
