@@ -6,14 +6,10 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
-import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import plp.expressions2.expression.Id;
 import plp.orientadaObjetos1.expressao.valor.Valor;
@@ -45,10 +41,10 @@ public class TriColorIncrementalGC implements GarbageColector {
 
 	public long runGC(final Stack<HashMap<Id, Valor>> pilha,
 			final HashMap<ValorRef, Objeto> mapObjetos) {
-		// mark
-		this.marcar(pilha, mapObjetos);
-		// sweep
-		long naoAlcancaveis = this.coletar(mapObjetos);
+//		// mark
+//		this.marcar(pilha, mapObjetos);
+//		// sweep
+//		long naoAlcancaveis = this.coletar(mapObjetos);
 		
 		class RunGC implements Callable<Long> {
 			
@@ -63,7 +59,7 @@ public class TriColorIncrementalGC implements GarbageColector {
 		};
 		
 		Future<Long> resultado=getExecutorService().submit(new RunGC());
-		
+		long naoAlcancaveis = 0;
 		try {
 			naoAlcancaveis=resultado.get();
 		} catch (Exception e) {
@@ -180,6 +176,10 @@ public class TriColorIncrementalGC implements GarbageColector {
 
 	public synchronized long referenciasColetadas() {
 		return contadorReferenciasColetadas;
+	}
+
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, ValorRef ref) {
+		//Não faz nada. Esse garbage collector não é incremental
 	}
 
 }

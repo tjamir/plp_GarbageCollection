@@ -3,10 +3,7 @@ package plp.orientadaObjetos1.memoria;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map.Entry;
 import java.util.Stack;
 
 import plp.expressions2.expression.Id;
@@ -25,6 +22,7 @@ import plp.orientadaObjetos1.expressao.valor.ValorRef;
 import plp.orientadaObjetos1.expressao.valor.ValorString;
 import plp.orientadaObjetos1.memoria.colecao.ListaValor;
 import plp.orientadaObjetos1.memoria.gc.GarbageColector;
+import plp.orientadaObjetos1.memoria.gc.IncrementalGC;
 import plp.orientadaObjetos1.memoria.gc.SimpleMarkSweepGC;
 import plp.orientadaObjetos1.memoria.gc.TriColorIncrementalGC;
 import plp.orientadaObjetos1.util.Tipo;
@@ -128,7 +126,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
      */
     
     public GarbageColector createGc(){
-    	return new TriColorIncrementalGC();
+    	return new IncrementalGC();
     }
 
     /**
@@ -349,6 +347,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         if (this.mapObjetos.put(valorRef, objeto) != null) {
             throw new ObjetoJaDeclaradoException(objeto.getClasse());
         }
+        writeBarrier(mapObjetos, valorRef);
     }
 
     /**
@@ -563,6 +562,9 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 
 	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, Objeto objeto) {
 		garbageColector.writeBarrier(mapObjetos, objeto);
+	}
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, ValorRef ref) {
+		garbageColector.writeBarrier(mapObjetos, ref);
 	}
     
     

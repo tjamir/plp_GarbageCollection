@@ -22,4 +22,5 @@ public interface GarbageColector {
 
 	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, Objeto objeto);
 
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, ValorRef ref);
 }

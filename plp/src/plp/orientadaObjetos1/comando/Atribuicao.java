@@ -58,6 +58,7 @@ public class Atribuicao implements Comando {
             ValorRef referencia = (ValorRef)expAV.avaliar(ambiente);
             Objeto obj = ambiente.getObjeto(referencia);
             ambiente.writeBarrier(ambiente.getMapObjetos(), obj);
+            //ambiente.writeBarrier(ambiente.getMapObjetos(), referencia);
             obj.changeAtributo(idVariavel, expressao.avaliar(ambiente));
             
         }

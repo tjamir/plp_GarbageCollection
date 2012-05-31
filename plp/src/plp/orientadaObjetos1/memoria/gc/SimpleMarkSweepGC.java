@@ -104,5 +104,9 @@ public class SimpleMarkSweepGC implements GarbageColector {
 		
 		//Não faz nada. Esse garbage collector não é incremental
 	}
+
+	public void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos, ValorRef ref) {
+		//Não faz nada. Esse garbage collector não é incremental
+	}
 	
 }

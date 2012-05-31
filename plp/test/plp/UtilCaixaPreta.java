@@ -917,7 +917,12 @@ public class UtilCaixaPreta {
 				"		  lv.prox := new LValor;"+
 				"		  lv.insere(2);"+
 				"		  lv.insere(100);"+
-				"		  lv.insere(1000)"+
+				"		  lv.insere(1000);"+
+				"		  i := 0;"+
+				"		  while not(i==100) do {"+
+				"			lv.insere(i);"+
+				"			i:=i+1"+
+				"		  }"+
 				"  } "  +
 				" } "	
 		, 97});
@@ -979,6 +984,10 @@ public class UtilCaixaPreta {
 "		i:=i+1;"+
 "		j:=j+1"+
 
+"	};" +
+"	while not(i==401) do {" +
+"		pilha.push(i);" +
+"		i:=i+1" +
 "	}" +
 "	}"+
 
