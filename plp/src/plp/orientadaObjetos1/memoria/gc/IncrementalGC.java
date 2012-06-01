@@ -3,12 +3,9 @@ package plp.orientadaObjetos1.memoria.gc;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import plp.expressions2.expression.Id;
 import plp.orientadaObjetos1.expressao.valor.Valor;
@@ -29,21 +26,12 @@ public class IncrementalGC implements GarbageColector {
 	 */
 	private long contadorReferenciasColetadas = 0;
 
-	private static ExecutorService executor;
-
 	public IncrementalGC() {
 		this.brancas = new LinkedList<ValorRef>();
 		this.cinzas =  new LinkedList<ValorRef>();
 		this.pretas = new LinkedList<ValorRef>();
 	}
 
-	public static ExecutorService getExecutorService() {
-		if (executor == null) {
-			executor = Executors.newFixedThreadPool(1);
-		}
-		return executor;
-
-	}
 
 	public synchronized long runGC(Stack<HashMap<Id, Valor>> pilha,
 			HashMap<ValorRef, Objeto> mapObjetos) {
@@ -125,7 +113,6 @@ public class IncrementalGC implements GarbageColector {
 	 */
 	public synchronized void writeBarrier(HashMap<ValorRef, Objeto> mapObjetos,
 			ValorRef ref) {
-
 
 		// caminha um objeto na marcação
 		marcaObjeto(mapObjetos);
